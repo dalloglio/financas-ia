@@ -50,8 +50,85 @@ Para utilizar o "Finanças IA" e obter insights sobre suas finanças, siga os pa
 - Google Sheets API (via google-api-python-client): A API do Google Sheets para acessar os dados da planilha do usuário.
 - Google Cloud Platform (GCP): A plataforma do Google Cloud para gerenciar as credenciais de acesso às APIs do Google.
 
+## Instalação e Execução:
+
+### 1. Pré-requisitos:
+
+- **Python:** Certifique-se de que o Python 3.9 ou superior esteja instalado em seu sistema. Você pode verificar a versão executando `python --version` ou `python3 --version` no terminal. Se não estiver instalado, você pode baixá-lo em [https://www.python.org/downloads/](https://www.python.org/downloads/).
+- **pip:** O gerenciador de pacotes do Python (`pip`) geralmente vem instalado com o Python. Verifique se ele está disponível executando `pip --version` ou `pip3 --version`.
+
+### 2. Configuração do Projeto:
+
+- **Clone o repositório:** Clone o repositório do projeto para o seu computador.
+- **Navegue até o diretório do projeto:** Use o comando `cd` no terminal para entrar no diretório onde o projeto foi clonado.
+
+### 3. Gerenciamento de Dependências (Recomendado):
+
+- **Ambiente Virtual (Opcional, mas recomendado):** É uma boa prática criar um ambiente virtual para isolar as dependências do projeto.
+  - **Criar um ambiente virtual:**
+    ```bash
+    python -m venv .venv  # Cria um ambiente virtual na pasta .venv (você pode escolher outro nome)
+    ```
+  - **Ativar o ambiente virtual:**
+    - **Linux/macOS:**
+      ```bash
+      source .venv/bin/activate
+      ```
+    - **Windows:**
+      ```bash
+      .venv\Scripts\activate
+      ```
+- **Instalar as dependências:** Use o `pip` para instalar as bibliotecas necessárias. Se você tiver um arquivo `requirements.txt`, execute:
+  ```bash
+  pip install -r requirements.txt
+  ```
+  Se não tiver, instale as bibliotecas manualmente:
+  ```bash
+  pip install google-generativeai google-api-python-client google-auth pandas python-dotenv
+  ```
+
+### 4. Configuração das Credenciais:
+
+- **Google Cloud Platform (GCP):**
+  - Você precisará configurar um projeto no Google Cloud Platform (GCP) e habilitar a API do Google Sheets.
+  - Crie uma conta de serviço e gere um arquivo de credenciais JSON.
+  - Compartilhe a planilha do Google Sheets com o endereço de e-mail da conta de serviço (com permissão de leitura).
+- **Variáveis de Ambiente:**
+  - Para executar o script, você precisará definir as seguintes variáveis de ambiente:
+    - `GOOGLE_API_KEY`: Sua chave da API Gemini.
+    - `SERVICE_ACCOUNT_INFO`: O conteúdo do seu arquivo de credenciais JSON (ou a string Base64 codificada, conforme descrito anteriormente).
+    - `SPREADSHEET_ID`: O ID da sua planilha do Google Sheets.
+  - Você pode definir essas variáveis diretamente no seu terminal (para testes rápidos) ou usar um arquivo `.env` (com a biblioteca `python-dotenv`) para desenvolvimento local.
+  - Em ambientes de produção (como Docker), é altamente recomendável definir essas variáveis diretamente no ambiente do sistema/container para segurança.
+
+### 5. Execução do Script:
+
+- Navegue até o diretório onde o arquivo `main.py` está localizado.
+- Execute o script Python:
+  ```bash
+  python main.py
+  ```
+
+### 6. Execução com Docker (Opcional):
+
+- Se você tiver o Docker instalado, pode executar o projeto em um container.
+- **Construir a imagem Docker:**
+  ```bash
+  docker build -t financas-ia .
+  ```
+- **Executar o container:**
+  ```bash
+  docker run -it --rm \
+      -e GOOGLE_API_KEY=$GOOGLE_API_KEY \
+      -e SERVICE_ACCOUNT_INFO="$SERVICE_ACCOUNT_INFO" \
+      -e SPREADSHEET_ID=$SPREADSHEET_ID \
+      financas-ia
+  ```
+  - Certifique-se de substituir as variáveis de ambiente pelos valores reais ou de defini-las no seu ambiente antes de executar o comando.
+  - O uso de `docker-compose` também é uma opção para configurar o ambiente.
+
 ## Próximos Passos:
 
-- Registro de Transações via Chatbot: Implementar a funcionalidade para que o usuário possa adicionar novas despesas e receitas diretamente através de comandos de texto. A API Gemini poderia ser utilizada para entender a entrada do usuário, identificar o valor e a categoria, e adicionar essa transação automaticamente à planilha do Google Sheets do usuário.
 - Interface Web Interativa: Desenvolver uma interface web onde o usuário poderá interagir via chat com a aplicação. Isso proporcionará uma experiência mais rica e intuitiva para obter insights financeiros detalhados.
-- Login do Usuário com o Google: Implementar um sistema de login do usuário através de sua conta Google para simplificar o acesso à planilha do Google Sheets.
+- Login do Usuário com o Google: Implementar um sistema de login do usuário através de sua conta Google para simplificar o acesso à planilha do Google Sheets.s
+- Registro de Transações via Chatbot: Implementar a funcionalidade para que o usuário possa adicionar novas despesas e receitas diretamente através de comandos de texto. A API Gemini poderia ser utilizada para entender a entrada do usuário, identificar o valor e a categoria, e adicionar essa transação automaticamente à planilha do Google Sheets do usuário.

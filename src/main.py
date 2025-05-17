@@ -1,10 +1,13 @@
 import os
 import json
 import base64
+from dotenv import load_dotenv
 import google.generativeai as genai
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import pandas as pd
+
+load_dotenv()
 
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 SERVICE_ACCOUNT_INFO_BASE64 = os.environ.get("SERVICE_ACCOUNT_INFO_BASE64")
